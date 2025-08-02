@@ -13,7 +13,7 @@
 
 ## Team Members
 - [AbdAelrahman Mostafa Mohamed](https://github.com/Abdo71d)
-- [Nora Magdy Mohamed](https://github.com/GitHubUsername)
+- [Nora Magdy Mohamed](https://github.com/noramagdy)
 - [Hussein Mohamed Suleiman](https://github.com/husseinmohamed7)
 - [Mina Essam Azmy](https://github.com/GitHubUsername)
 - [Maher Mahmoud Elmoghazi](https://github.com/GitHubUsername)
