@@ -16,7 +16,7 @@
 - [Nora Magdy Mohamed](https://github.com/noramagdy)
 - [Hussein Mohamed Suleiman](https://github.com/husseinmohamed7)
 - [Mina Essam Azmy](https://github.com/minaessam95)
-- [Maher Mahmoud Elmoghazi](https://github.com/maher.dataconsult)
+- [Maher Mahmoud Elmoghazi](https://github.com/maher-dataconsult)
 
 
 ## Tech Stack
