@@ -13,176 +13,183 @@
 ## ERD
 ```mermaid
 erDiagram
-Users {
-	int user_id PK ""  
-	string username  ""  
-	string password  ""  
-	string user_type  ""  
-    bool is_active
-    datetime created_at
-    datetime last_login
+      
+"answers.student_exam_results" {
+    int exam_results_id "PK"
+          int exam_student_id "FK"
+          decimal exam_score ""
+          
 }
-
-Manager {
-	int manager_id PK ""  
-	int user_id FK ""  
-	string name  ""  
-	string email  ""  
+"answers.class_results" {
+    int class_results_id "PK"
+          int student_id "FK"
+          int class_id "FK"
+          decimal total_score ""
+          bit status "CHECK"
+          
 }
-
-Instructor {
-	int instructor_id PK ""  
-	int user_id FK ""  
-	string name  ""  
-	string email  ""  
-    int department_id FK ""
+"core.users" {
+    int user_id "PK"
+          varchar(20) username "UNIQUE"
+          nvarchar(100) password ""
+          varchar(20) user_type "CHECK"
+          bit is_active ""
+          datetime created_at ""
+          datetime last_login ""
+          
 }
-
-Student {
-	int student_id PK ""  
-	int user_id FK ""  
-	string name  ""  
-	string email  ""  
-    int branch_id FK
-	int track_id FK
-	int intake_id FK
+"core.managers" {
+    int manager_id "PK"
+          int user_id "FK"
+          nvarchar(100) name ""
+          varchar(100) email "UNIQUE"
+          
 }
-
-Department {
-	int department_id PK ""  
-	string name  ""  
+"core.departments" {
+    int department_id "PK"
+          nvarchar(100) name ""
+          
 }
-
-Branch {
-	int branch_id PK ""  
-	string name  ""  
+"core.tracks" {
+    int track_id "PK"
+          nvarchar(100) name ""
+          int department_id "FK"
+          
 }
-
-Track {
-	int track_id PK ""  
-	string name  ""  
+"core.branches" {
+    int branch_id "PK"
+          nvarchar(100) name ""
+          nvarchar(100) location ""
+          
 }
-
-Intake {
-	int intake_id PK ""  
-	int year  ""  
+"core.intakes" {
+    int intake_id "PK"
+          smallint intake_year ""
+          
 }
-
-Course {
-	int course_id PK ""  
-	string name  ""  
-	string description  ""  
-	int max_degree  ""  
-	int min_degree  ""  
+"core.instructors" {
+    int instructor_id "PK"
+          int user_id "FK"
+          nvarchar(100) name ""
+          varchar(100) email "UNIQUE"
+          int department_id "FK"
+          
 }
-
-Class_Offering {
-	int class_id PK ""  
-	int instructor_id FK ""  
-	int course_id FK ""  
-	int branch_id FK ""  
-	int track_id FK ""  
-	int intake_id FK ""  
+"core.students" {
+    int student_id "PK"
+          int user_id "FK"
+          nvarchar(100) name ""
+          varchar(100) email "UNIQUE"
+          int branch_id "FK"
+          int track_id "FK"
+          int intake_id "FK"
+          
 }
-
-Exam {
-	int exam_id PK ""  
-	string exam_type  ""  
-	datetime start_time  ""  
-	datetime end_time  ""  
-	int total_time  ""  
-	int total_degree  ""  
-	int class_id FK ""  
-	int extra_time_minutes  ""  
-	bool open_book  ""  
-	bool allow_calculator  ""  
+"courses.courses" {
+    int course_id "PK"
+          varchar(50) course_name "UNIQUE"
+          nvarchar(200) description ""
+          decimal max_degree "CHECK"
+          decimal min_degree "CHECK"
+          
 }
-
-Exam_Questions {
-	int exam_id FK ""  
-	int question_id FK ""  
-	int question_degree  ""  
+"courses.class_offerings" {
+    int class_id "PK"
+          int course_id "FK"
+          int instructor_id "FK"
+          int intake_id "FK"
+          int branch_id "FK"
+          int track_id "FK"
+          
 }
-
-Exam_Student {
-	int exam_student_id PK ""  
-	int exam_id FK ""  
-	int student_id FK ""  
-	int class_id FK ""  
-	date exam_date  ""  
-	time start_time  ""  
-	time end_time  ""  
-	int total_grade  ""  
-	datetime submission_time  ""  
+"questions_bank.questions" {
+    int question_id "PK"
+          int course_id "FK"
+          nvarchar(255) question_text ""
+          varchar(10) question_type "CHECK"
+          
 }
-
-Question_Type {
-	int type_id PK ""  
-	string type_name  ""  
+"questions_bank.options" {
+    int option_id "PK"
+          int question_id "FK"
+          nvarchar(255) option_text ""
+          bit is_correct ""
+          
 }
-
-Question {
-	int question_id PK ""  
-	int type_id FK ""  
-	string question_text  ""  
+"questions_bank.accepted_text_answers" {
+    int text_answers_id "PK"
+          int question_id "FK"
+          nvarchar(500) accepted_pattern ""
+          
 }
-
-Accepted_Text_Answers {
-	int id PK ""  
-	int question_id FK ""  
-	string accepted_pattern  ""  
+"exams.exams" {
+    int exam_id "PK"
+          varchar(50) exam_type "CHECK"
+          datetime start_time "CHECK"
+          datetime end_time "CHECK"
+          int total_time ""
+          decimal total_degree ""
+          int class_id "FK"
+          int extra_time_minutes ""
+          bit open_book ""
+          bit allow_calculator ""
+          
 }
-
-Options {
-	int option_id PK ""  
-	int question_id FK ""  
-	string option_text  ""  
-	bool is_correct  ""  
+"exams.exam_questions" {
+    int exam_id "FK, PK"
+          int question_id "FK, PK"
+          int question_degree ""
+          
 }
-
-Student_Answer {
-	int student_answer_id PK ""  
-	int exam_student_id FK ""  
-	int question_id FK ""  
-	int option_id FK "nullable"  
-	string answer_text  "nullable"  
-	bool is_correct  "" 
-    int manual_score 
+"exams.exam_students" {
+    int exam_student_id "PK"
+          int exam_id "FK, UNIQUE"
+          int student_id "FK, UNIQUE"
+          date exam_date ""
+          time start_time "CHECK"
+          time end_time "CHECK"
+          decimal total_grade ""
+          datetime submission_time ""
+          
 }
-
-Result {
-	int result_id PK ""  
-	int student_id FK ""  
-	int class_id FK ""  
-	int total_score  ""  
-	bool status  ""  
+"answers.student_answers" {
+    int student_answers_id "PK"
+          int exam_student_id "FK, UNIQUE"
+          int question_id "FK, UNIQUE"
+          int option_id "FK"
+          nvarchar(255) answer_text ""
+          bit is_correct "CHECK"
+          decimal manual_score ""
+          bit auto_match "CHECK"
+          
 }
-
-Users ||--|| Instructor : "has"
-Users ||--|| Student : "has"
-Users ||--|| Manager : "has"
-
-Department ||--o{ Track : "has"
-Instructor ||--o{ Class_Offering : "teaches"
-Course ||--o{ Class_Offering : "is_part_of"
-Branch ||--o{ Class_Offering : "belongs_to"
-Track ||--o{ Class_Offering : "belongs_to"
-Intake ||--o{ Class_Offering : "is_for"
-Student ||--o{ Class_Offering : "enrolls_in"
-
-Exam ||--o{ Exam_Questions : "has_questions"
-Exam ||--o{ Exam_Student : "has_students"
-Class_Offering ||--o{ Exam : "has_exams"
-Class_Offering ||--o{ Exam_Student : "takes_exam_for"
-
-Question_Type ||--o{ Question : "has"
-Question ||--o{ Options : "has"
-Question ||--o{ Exam_Questions : "is_part_of"
-Question ||--o{ Accepted_Text_Answers : "has"
-Question||--o{Student_Answer:"is_answered"
-Exam_Student ||--o{ Student_Answer : "provides"
-Student ||--o{ Result : "gets"
-Class_Offering ||--o{ Result : "belongs_to"
+      "answers.student_exam_results" }|--|| "exams.exam_students": "exam_student_id"
+"answers.class_results" }|--|| "core.students": "student_id"
+"answers.class_results" }|--|| "courses.class_offerings": "class_id"
+"core.managers" }|--|| "core.users": "user_id"
+"core.tracks" |{--o| "core.departments": "department_id"
+"core.instructors" }|--|| "core.users": "user_id"
+"core.instructors" |{--o| "core.departments": "department_id"
+"core.students" }|--|| "core.users": "user_id"
+"core.students" |{--o| "core.branches": "branch_id"
+"core.students" |{--o| "core.tracks": "track_id"
+"core.students" |{--o| "core.intakes": "intake_id"
+"courses.class_offerings" }|--|| "courses.courses": "course_id"
+"courses.class_offerings" }|--|| "core.instructors": "instructor_id"
+"courses.class_offerings" }|--|| "core.intakes": "intake_id"
+"courses.class_offerings" }|--|| "core.branches": "branch_id"
+"courses.class_offerings" }|--|| "core.tracks": "track_id"
+"questions_bank.questions" }|--|| "courses.courses": "course_id"
+"questions_bank.options" }|--|| "questions_bank.questions": "question_id"
+"questions_bank.accepted_text_answers" }|--|| "questions_bank.questions": "question_id"
+"exams.exams" }|--|| "courses.class_offerings": "class_id"
+"exams.exam_questions" }|--|| "exams.exams": "exam_id"
+"exams.exam_questions" }|--|| "questions_bank.questions": "question_id"
+"exams.exam_students" ||--|{ "exams.exams": "exam_id"
+"exams.exam_students" ||--|{ "core.students": "student_id"
+"answers.student_answers" ||--|{ "exams.exam_students": "exam_student_id"
+"answers.student_answers" ||--|{ "questions_bank.questions": "question_id"
+"answers.student_answers" |{--o| "questions_bank.options": "option_id"
 ```
 
 ---
