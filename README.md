@@ -243,36 +243,7 @@ The system leverages a comprehensive set of database objects:
     ├── DB_Testing_Script.sql
     └── DB_Testing_sResults.txt
 ```
-
-### Roles and Permissions
-
-The system implements a robust role-based access control model with the following database roles:
-
-*   `training_manager`: Manages users and core organizational entities.
-*   `instructor`: Manages courses, questions, and exams.
-*   `student`: Accesses and takes exams, views personal results.
-
-Permissions are strictly enforced, denying direct access to core data schemas for these roles, ensuring interaction only through their designated API schemas.
-
-## Installation and Setup
-
-The database can be set up by executing the [`Full_Database.sql`](Full_Database.sql) script. This script handles:
-1.  Dropping and recreating the `g1_examination_system` database (if it exists).
-2.  Defining filegroups for optimal data storage.
-3.  Creating all schemas, tables, stored procedures, functions, views, and triggers.
-4.  Inserting seed data for initial setup.
-5.  Defining and granting permissions to server and database roles.
-
-**Note**: The script contains conditional logic for Linux and Windows file paths for database files. Ensure the correct section is uncommented based on your operating system.
-
-### For Docker Users
-
-Just run those command in same directory of Dockerfile
-
-```
-docker build -t examination-system-db .
-```
-
+main
 ```
 docker run -d -p 1433:1433 --name sql-examination-system examination-system-db
 ```
@@ -282,8 +253,9 @@ docker run -d -p 1433:1433 --name sql-examination-system examination-system-db
 - GitHub
 - Trello
 - Mermaid
-- VScode
+
 
 ## Usage and Testing
 
 The system is designed to be interacted with primarily through the defined stored procedures and views, ensuring a controlled and secure environment. Test sheets containing test queries, their results, and comments are available to validate system functionality.
+main
