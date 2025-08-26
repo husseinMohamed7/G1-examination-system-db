@@ -253,7 +253,8 @@ docker run -d -p 1433:1433 --name sql-examination-system examination-system-db
 - GitHub
 - Trello
 - Mermaid
-
+- Docker
+- VS code
 
 ## Usage and Testing
 
